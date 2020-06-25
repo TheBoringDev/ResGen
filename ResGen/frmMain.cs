@@ -23,7 +23,10 @@ namespace ResGen
             lblMessage.Text = string.Empty;
             vsDevCommandPromptPath = GetVSDeveloperCommandPromptPath();
             if (string.IsNullOrEmpty(vsDevCommandPromptPath))
+            {
                 WriteLog("Visual Studio is required to install!", MessageType.ERROR);
+                btnBrowse.Enabled = false;
+            }
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
