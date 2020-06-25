@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,11 +15,15 @@ namespace ResGen
 {
     public partial class frmMain : Form
     {
+        private static string vsDevCommandPromptPath = string.Empty;
         public frmMain()
         {
             InitializeComponent();
 
             lblMessage.Text = string.Empty;
+            vsDevCommandPromptPath = GetVSDeveloperCommandPromptPath();
+            if (string.IsNullOrEmpty(vsDevCommandPromptPath))
+                WriteLog("Visual Studio is required to install!", MessageType.ERROR);
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -71,18 +76,18 @@ namespace ResGen
         {
             List<string> files = GetAllResx(txtFileLoc.Text);
             var proc = new ProcessStartInfo();
-            string anyCommand = "cd /d " + txtFileLoc.Text;
             proc.UseShellExecute = true;
             proc.WorkingDirectory = @"C:\Windows\System32";
             proc.FileName = @"C:\Windows\System32\cmd.exe";
-            proc.Arguments = "/k " + anyCommand;
+            proc.Arguments = string.Format(@"%comspec% /k ""{0}""", vsDevCommandPromptPath);
+            proc.Arguments += @" && cd /d " + txtFileLoc.Text;
 
             foreach (var file in files)
             {
-                proc.Arguments += "&&ResGen.exe " + file;
+                proc.Arguments += " && ResGen " + file;
             }
 
-            proc.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.WindowStyle = ProcessWindowStyle.Normal;
             Process.Start(proc);
             WriteLog("Done!", MessageType.SUCCEED);
         }
@@ -104,6 +109,23 @@ namespace ResGen
             INFO = 1,
             ERROR = 2,
             SUCCEED = 3
+        }
+
+        private string GetVSDeveloperCommandPromptPath()
+        {
+            string vsPath = @"C:\Program Files (x86)\Microsoft Visual Studio";
+
+            if (!Directory.Exists(vsPath))
+            {
+                return string.Empty;
+            }
+
+            List<string> files = Directory.EnumerateFiles(vsPath, "VsDevCmd.bat", SearchOption.AllDirectories).ToList();
+
+            if (files.Count == 0)
+                return string.Empty;
+
+            return files.Last<string>();
         }
     }
 }

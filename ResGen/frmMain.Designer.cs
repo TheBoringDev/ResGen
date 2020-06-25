@@ -62,10 +62,10 @@
             this.txtFileLoc.Name = "txtFileLoc";
             this.txtFileLoc.Size = new System.Drawing.Size(522, 25);
             this.txtFileLoc.TabIndex = 3;
+            this.txtFileLoc.Text = "D:\\Work\\New folder";
             // 
             // btnStart
             // 
-            this.btnStart.Enabled = false;
             this.btnStart.Location = new System.Drawing.Point(724, 12);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(120, 25);
