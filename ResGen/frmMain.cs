@@ -17,38 +17,54 @@ namespace ResGen
         public frmMain()
         {
             InitializeComponent();
+
+            lblMessage.Text = string.Empty;
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-            if(folderBrowserDialogFileLoc.ShowDialog() == DialogResult.OK)
-            {
-                txtFileLoc.Text = folderBrowserDialogFileLoc.SelectedPath;
+            lblMessage.Text = string.Empty;
+            folderBrowserDialogFileLoc.ShowDialog();
 
-                if (IsValidLocation(txtFileLoc.Text))
-                {
-                    btnBrowse.Enabled = false;
-                    btnStart.Enabled = true;
-                }
-                else
-                    WriteLog(string.Format("'{0}' does not contain any *.resx file.", txtFileLoc.Text));
+            txtFileLoc.Text = folderBrowserDialogFileLoc.SelectedPath;
+
+            if (IsValidLocation(txtFileLoc.Text))
+            {
+                btnBrowse.Enabled = false;
+                btnStart.Enabled = true;
             }
+            else
+                WriteLog(string.Format("'{0}' does not contain any *.resx file.", txtFileLoc.Text), MessageType.ERROR);
         }
 
         private bool IsValidLocation(string folderPath)
         {
+            if (string.IsNullOrEmpty(folderPath))
+                return false;
+
             if (Directory.GetFiles(folderPath, "*.resx").Length == 0)
                 return false;
 
             return true;
         }
 
-        private void WriteLog(string msg)
+        private void WriteLog(string msg, MessageType type)
         {
-            if (string.IsNullOrEmpty(rtbLogs.Text))
-                rtbLogs.Text = msg;
-            else
-                rtbLogs.Text += "\n" + msg;
+            lblMessage.Text = msg;
+            lblMessage.Enabled = true;
+
+            switch (type)
+            {
+                case MessageType.INFO:
+                    lblMessage.ForeColor = Color.Black;
+                    break;
+                case MessageType.ERROR:
+                    lblMessage.ForeColor = Color.Red;
+                    break;
+                case MessageType.SUCCEED:
+                    lblMessage.ForeColor = Color.Green;
+                    break;
+            }
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -68,7 +84,7 @@ namespace ResGen
 
             proc.WindowStyle = ProcessWindowStyle.Hidden;
             Process.Start(proc);
-            WriteLog("Done!");
+            WriteLog("Done!", MessageType.SUCCEED);
         }
 
         private List<string> GetAllResx(string path)
@@ -81,6 +97,13 @@ namespace ResGen
             }
 
             return files;
+        }
+
+        private enum MessageType
+        {
+            INFO = 1,
+            ERROR = 2,
+            SUCCEED = 3
         }
     }
 }

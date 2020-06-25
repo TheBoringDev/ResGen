@@ -31,9 +31,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.folderBrowserDialogFileLoc = new System.Windows.Forms.FolderBrowserDialog();
             this.btnBrowse = new System.Windows.Forms.Button();
-            this.rtbLogs = new System.Windows.Forms.RichTextBox();
             this.txtFileLoc = new System.Windows.Forms.TextBox();
             this.btnStart = new System.Windows.Forms.Button();
+            this.lblMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -55,15 +55,6 @@
             this.btnBrowse.UseVisualStyleBackColor = true;
             this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
-            // rtbLogs
-            // 
-            this.rtbLogs.Enabled = false;
-            this.rtbLogs.Location = new System.Drawing.Point(8, 43);
-            this.rtbLogs.Name = "rtbLogs";
-            this.rtbLogs.Size = new System.Drawing.Size(836, 340);
-            this.rtbLogs.TabIndex = 2;
-            this.rtbLogs.Text = "";
-            // 
             // txtFileLoc
             // 
             this.txtFileLoc.Enabled = false;
@@ -71,11 +62,11 @@
             this.txtFileLoc.Name = "txtFileLoc";
             this.txtFileLoc.Size = new System.Drawing.Size(522, 25);
             this.txtFileLoc.TabIndex = 3;
-            this.txtFileLoc.Text = "D:\\Work\\New folder";
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(724, 11);
+            this.btnStart.Enabled = false;
+            this.btnStart.Location = new System.Drawing.Point(724, 12);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(120, 25);
             this.btnStart.TabIndex = 4;
@@ -83,17 +74,29 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
+            // lblMessage
+            // 
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Enabled = false;
+            this.lblMessage.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMessage.Location = new System.Drawing.Point(157, 40);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(168, 17);
+            this.lblMessage.TabIndex = 5;
+            this.lblMessage.Text = "Error messages show here";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(852, 389);
+            this.ClientSize = new System.Drawing.Size(849, 69);
+            this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.txtFileLoc);
-            this.Controls.Add(this.rtbLogs);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MinimizeBox = false;
             this.Name = "frmMain";
@@ -109,9 +112,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogFileLoc;
         private System.Windows.Forms.Button btnBrowse;
-        private System.Windows.Forms.RichTextBox rtbLogs;
         private System.Windows.Forms.TextBox txtFileLoc;
         private System.Windows.Forms.Button btnStart;
+        private System.Windows.Forms.Label lblMessage;
     }
 }
 
